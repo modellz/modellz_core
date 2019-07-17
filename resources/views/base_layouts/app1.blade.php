@@ -12,13 +12,31 @@
 </head>
 <body>
 <!--base container-->
-<div class="container-fluid">
+<div class="row">
+    <div class="container-fluid">
+    @yield('NavSide')
+    </div>
+    <div class="container" style="margin-top: 50px;">
     @yield('content')
+    </div>
 </div>
 <!--./base container-->
 <!--includes jquery, bootstrap, datatables...etc-->
 <script src="/js/app.js"></script>
 <!--includes Page scripts-->
+<script>
+    let  navopen=0;
+    function openNav( ) {
+        if (navopen === 0) {
+            document.getElementById("mySidenav").style.width = "250px";
+            navopen=1;
+        }
+        else {
+            document.getElementById("mySidenav").style.width = "0";
+            navopen=0;
+        }
+    }
+</script>
 @yield('page_scripts')
 </body>
 </html>
