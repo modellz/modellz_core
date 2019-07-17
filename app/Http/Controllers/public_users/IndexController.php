@@ -63,14 +63,14 @@ class IndexController extends Controller
         $data->name=$request->u_name;
         $data->email=$request->email;
         $data->phone=$request->phone;
-        $data->city=$request->city;
+        $data->location=$request->location;
         $data->status=1;
 
         $this->validate($request,[
             'u_name' => 'required',
             'email' => 'unique:public_users,email',
             'phone' => ['unique:public_users,phone',],
-            'city' => 'required',
+            'location' => 'required',
         ]);
         try{
             $data->save();

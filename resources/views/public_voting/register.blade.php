@@ -26,7 +26,7 @@
                         @endif
                         <div class="form-group">
                             <label for="name" class="control-label pull-left" style="padding-right: 25px;">Name*:</label>
-                            <input  type="text" class="form-control" name="u_name" placeholder="User name"  required autofocus >
+                            <input  type="text" class="form-control" pattern="[A-Za-z]{2,}" name="u_name" title="Name must be letters & above two letters" placeholder="User name"  required autofocus >
                         </div>
                         <div class="form-group">
                             <label for="Email" class="control-label pull-left" style="padding-right: 25px;">Email*:</label>
@@ -34,11 +34,11 @@
                         </div>
                         <div class="form-group">
                             <label for="phone" class="control-label pull-left"  style="padding-right: 25px;">Phone*:</label>
-                            <input  type="text" class="form-control" name="phone" title="Enter 10 digit mobile number" placeholder="Mobile number" required autofocus >
+                            <input  type="text" class="form-control" name="phone" pattern="[789][0-9]{9}" title="Enter 10 digit mobile number" placeholder="Mobile number" required autofocus >
                         </div>
                         <div class="form-group">
-                            <label for="City" class="control-label pull-left" style="padding-right: 25px;">City*:</label>
-                            <input  type="text" class="form-control" name="city" placeholder="City name" title="Enter valid City" required autofocus >
+                            <label for="Location" class="control-label pull-left" style="padding-right: 25px;">Location*:</label>
+                            <input  type="text" class="form-control" name="location" placeholder="Location" title="Enter valid Location" required autofocus>
                         </div>
 
                         <div class="form-group">
