@@ -3,7 +3,7 @@
 @section('NavSide')
     <div class="row">
         <div class="col-md-3 col-lg-3 col-sm-10 col-10 mx-auto login-div" style="margin-top: 40px;">
-            <h3 class="pl-2"> A journey with us!</h3>
+            <h3 class="pl-2"> Sign in !</h3>
             <div class="card shadow" style="border-radius: 10px;">
                 <div class="card-body">
                     <form role="form" method="POST" action="/public/logme">
