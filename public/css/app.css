@@ -72,6 +72,10 @@ table.dataTable tbody>tr.selected,table.dataTable tbody>tr>.selected{background-
 .lwidth{
     padding-right: 20px;
     min-width: 170px;
+}
+.has-error{
+    border: red !important;
+    color:red !important;
 }@charset "UTF-8";
 
 /*!

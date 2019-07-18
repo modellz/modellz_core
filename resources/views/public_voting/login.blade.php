@@ -28,7 +28,7 @@
 
                         <div class="form-group">
                             <div class="float-left">
-                                <button type="submit"  class="btn btn-primary" style="display: inline;">Let's go</button>
+                                <button type="submit"  class="btn btn-primary" style="display: inline;">Log in</button>
                                 <a class="btn btn-link" href="/public/register" id="IdHai" style="font-size: 14px;display: inline;">
                                     Register Here !
                                 </a>
