@@ -11,19 +11,22 @@
     @yield('links')
 </head>
 <body>
+@include('base_includes.loading')
 <!--base container-->
-<div id="page-container">
-    @include('base_includes.loading')
-    <div id="content-wrap">
-        <div class="container-fluid">
-            @yield('NavSide')
-        </div>
-        <div class="container-fluid" style="margin-top: 50px;">
-            @yield('content')
-        </div>
+    <div class="container-fluid">
+        <nav  class="navbar navbar-expand-lg navbar-expand-md navbar-light fixed-top bg-white p-0 shadow">
+            <strong   class="ml-2 mx-auto" id="IdNumOfRows" style="font-size:20px;color: #e83a93;">Welcome to <img src="{{asset('storage/logo.png')}}" width="150px"></strong>
+            <!-- Toggler/collapsibe Button -->
+        </nav>
     </div>
-    @include('base_includes.footer')
-</div>
+    <div class="container-fluid mx-4" style="margin-top: 50px;">
+    @yield('content')
+    </div>
+<footer class="footer bg-dark fixed-bottom shadow-lg p-2">
+    <div class="container">
+        <span class="text-muted"> © 2019 -<a href="http://www.modellz.com">Modellz</a> All Rights Reserved</span>
+    </div>
+</footer>
 <!--./base container-->
 <!--includes jquery, bootstrap, datatables...etc-->
 <script src="/js/app.js"></script>

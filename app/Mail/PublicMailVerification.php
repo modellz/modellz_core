@@ -15,17 +15,19 @@ class PublicMailVerification extends Mailable
     public $name;
     public $email;
     public $phone;
+    public $otp;
 
     /**
      * Create a new message instance.
      * @return void
      */
-    public function __construct($token,$name,$email,$phone)
+    public function __construct($token,$name,$email,$phone,$otp)
     {
         $this->token = $token;
         $this->name = $name;
         $this->email = $email;
         $this->phone = $phone;
+        $this->otp = $otp;
     }
 
     /**

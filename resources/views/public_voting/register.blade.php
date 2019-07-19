@@ -1,8 +1,9 @@
-@extends('base_layouts.app1')
+@extends('base_layouts.app2')
 <!--main content-->
-@section('NavSide')
+@section('content')
     <div class="row">
         <div class="container" id="IdMyResults"></div>
+        <div id="IdCreateErrors"></div>
         <div id="IdRegisterBlock" class="col-md-4 col-lg-4 col-sm-10 col-10 mx-auto login-div" style="margin-top: 40px;">
             <h3 class="pl-2">New user Registration !</h3>
             <div class="card shadow" style="border-radius: 10px;">
@@ -55,10 +56,15 @@
                     data:new FormData(el),
                     contentType:false,
                     processData:false,
+                    beforeSend: function(){
+                        $("#IdLoading").modal('show');
+                    },
                     success:function(result)
                     {
                         $('#'+hider).remove();
                         $('#IdMyResults').html(result);
+                        $("#IdLoading").modal('hide');
+
                     },
                     error: function(result){
                         var errors = result.responseJSON;
@@ -66,6 +72,7 @@
                         $.each(errors.errors, function( key, value ) {
                             errorsHtml += '<li>'+value[0]+'</li> ';
                         });
+                        $("#IdLoading").modal('hide');
                         $('#IdCreateErrors').html('<div class="alert alert-danger alert-dismissible"> ' +
                             '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> ' +
                             '<ul> ' +errorsHtml +
@@ -79,11 +86,15 @@
                $('#IdPublicRegisterSubmit').addClass('disabled');
                commonajax('/public/register',this,'IdRegisterBlock');
             });
+
+
+             /**
             $('#IdPublicResend').on('click',function (e) {
                 e.preventDefault();
                 $('#IdPublicRegisterSubmit').addClass('disabled');
                 commonajax('/public/register',this,'IdRegisterBlock');
             });
+              **/
 
         });
     </script>

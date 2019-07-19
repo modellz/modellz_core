@@ -14,6 +14,8 @@ Route::group(['middleware' => ['public_pullback']],function () {
     Route::get('/public/verify', 'public_users\IndexController@verify')->name('Public_Verification');
     Route::get('/public/register/api/{name}/{token}', 'public_users\IndexController@activate')->name('mail.activate');
     Route::post('/public/register/otp', 'public_users\IndexController@verifyOtp')->name('sms.activate');
+    Route::post('/public/register/otp/resend', 'public_users\IndexController@resendSms')->name('public.otp.resend');
+    Route::post('/public/register/mail/resend', 'public_users\IndexController@resendMail')->name('public.mail.resend');
     Route::post('/public/logme', 'public_users\IndexController@logme')->name('public.logme');
     Route::post('/public/register', 'public_users\IndexController@store')->name('public.store');
 });

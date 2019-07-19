@@ -1,7 +1,7 @@
-@extends('base_layouts.app1')
+@extends('base_layouts.app2')
 <!--main content-->
-@section('NavSide')
-    <div class="row">
+@section('content')
+    <div class="row" style="width: 100%;">
         <div class="col-md-3 col-lg-3 col-sm-10 col-10 mx-auto login-div" style="margin-top: 40px;">
             <h3 class="pl-2"> Sign in !</h3>
             <div class="card shadow" style="border-radius: 10px;">

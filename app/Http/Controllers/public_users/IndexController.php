@@ -16,14 +16,24 @@ class IndexController extends Controller
     public function login(){
         return view('public_voting.login');
     }
+
     //new public user registration
     public function register(){
         return view('public_voting.register');
     }
+
     //new public user registration
     public function dashboard(){
-        return view('public_voting.dashboard');
+        $times=array(1,2,3,4,5,6,7,8,9,10,11,12);
+        return view('public_voting.dashboard')->with('times',$times);
     }
+
+    //logout control
+    public function logout(Request $request){
+        $request->session()->flush();
+        return redirect('/public/login');
+    }
+
     //login post controller
     public function logme(Request $request){
 
@@ -63,11 +73,7 @@ class IndexController extends Controller
             return redirect('/public/login');
         }
     }
-    //logout control
-    public function logout(Request $request){
-        $request->session()->flush();
-        return redirect('/public/login');
-    }
+
     //store user from new registration
     public function store(Request $request){
         $rules =[
@@ -94,10 +100,14 @@ class IndexController extends Controller
         $data->email=$request->email;
         $data->phone=$request->phone;
         $data->location=$request->location;
+        $data->num_of_sends=1;
         $data->status=0;
         $rand = rand(10000,99999);
         $data->sms_code = $rand;
         $data->token=Str::random(32);
+        session()->put([
+            'tmp_EM'=>$request->email
+        ]);
         $smsContent = "Hi $request->u_name,Use this code to activate your account.$rand";
 
         try{
@@ -113,17 +123,17 @@ class IndexController extends Controller
             </div>
             <div class="card shadow" style="border-radius: 10px;">
                 <div class="card-body">
-                    <form role="form" method="POST" action="/public/register/otp">
-                        {{ csrf_field() }}
+                    <form role="form" method="POST" action="/public/register/otp" autocomplete="off">                
                         <div class="form-group">
                             <label for="u_name" class="control-label pull-left" style="padding-right: 25px;">Enter OTP to verify mobile number :</label>
-                            <input  type="text" class="form-control" name="otp" required autofocus >
+                            <input  type="text" class="form-control" id="IdPublicOtp" name="otp" required autofocus >
+                            <input  type="hidden" class="form-control" id="IdPublicToken" name="_token" value="'.csrf_token().'">
                         </div>
                         <div class="form-group">
                             <div class="float-left">
-                                <button type="submit"  class="btn btn-primary" style="display: inline;">Submit</button>
+                                <button type="submit" id="IdOtpSubmit" class="btn btn-primary" style="display: inline;">Submit</button>
                                 <a class="btn btn-link" href="#" id="IdPublicResend" style="font-size: 14px;display: inline;">
-                                    Resend !
+                                    Resend OTP!
                                 </a><br/>
                             </div>
                         </div><br/></form></div></div></div>';
@@ -136,11 +146,12 @@ class IndexController extends Controller
             </div>';
         }
     }
+
     //mail link activation for public users
     public function activate($name,$token)
     {
         $user = public_users::where(['token'=> $token,'name'=>$name,'status'=>0])->first();
-
+        $this->notification_lock($user->num_of_sends);
         if (empty($user)) {
             session()->flash('err_msg','Your activation code is either expired or invalid, login here to re-validate.');
             return redirect()->to('/public/login');
@@ -153,6 +164,7 @@ class IndexController extends Controller
             return redirect()->to('/public/login');
         }
     }
+
     //sms otp verification for public users
     public function verifyOtp(Request $request)
     {
@@ -168,7 +180,8 @@ class IndexController extends Controller
         session()->flash('success_msg','Congratulations! your account is now activated.');
         return redirect()->to('/public/login');
     }
-    //prevent user from attempting more than 5 notifications
+
+    //Activation Page
     public function verify(){
         if(!session('tmp_EM')){
             session()->flash('err_msg','Enter your email / Phone before verifying your account');
@@ -177,15 +190,18 @@ class IndexController extends Controller
        return view('public_voting.activation');
     }
 
+    //send mail activation link
     public function SendActiveMail($data,$id=null){
         if($id!=null){
             $add=public_users::find($id);
             $add->num_of_sends+=1;
             $add->save();
         }
-        $mailables=new PublicMailVerification($data['token'],$data['name'],$data['email'],$data['phone']);
+        $mailables=new PublicMailVerification($data['token'],$data['name'],$data['email'],$data['phone'],$data['otp']);
          Mail::to($data['email'])->send($mailables);
     }
+
+    //Send sms otp for activation
     public function SendActiveSms($data,$smsContent,$id=null){
         if($id!=null){
             $add=public_users::find($id);
@@ -195,5 +211,56 @@ class IndexController extends Controller
         Curl::to('http://bulksms.expressad.in/httpapi/httpapi')
             ->withData( array( 'token' => '3dc6f581829d5b9a9df5ec4036db1bec', 'sender' => 'modelz','number'=>$data['phone'],'route'=>'2','type'=>1, 'sms'=> $smsContent ) )
             ->post();
+    }
+
+    //prevent user from attempting more than 6 notifications
+    protected function notification_lock($data){
+        if($data>6){
+            session()->flash('err_msg','You have reached notification limit, Kindly contact Modellz for further details');
+            return redirect()->to('/public/login');
+        }
+    }
+
+    //resend sms
+    public function resendSms(){
+        $user = public_users::where('email', session('tmp_EM'))->orWhere('phone',session('tmp_EM'))->first();
+        if($user->num_of_sends>6){
+            session()->flash('err_msg','You have reached notification limit, Kindly contact Modellz for further details');
+            echo '<script>
+                  window.location.href = "/public/login";
+                  </script>';
+        }else{
+            $rand = rand(10000,99999);
+            $user->sms_code = $rand;
+            $user->save();
+            $smsContent = "Hi $user->name,Use this code to activate your account.$rand";
+            $this->SendActiveSms($user,$smsContent,$user->id);
+            echo '<div class="alert alert-success">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             OTP send successfully !.
+            </div>';
+        }
+    }
+
+    //resend Email
+    public function resendMail(){
+        $user = public_users::where('email', session('tmp_EM'))->orWhere('phone',session('tmp_EM'))->first();
+        if($user->num_of_sends>6){
+            session()->flash('err_msg','You have reached notification limit, Kindly contact Modellz for further details');
+            echo '<script>
+                  window.location.href = "/public/login";
+                  </script>';
+        }else{
+            $user->token=Str::random(32);
+            $user->save();
+            $this->SendActiveMail($user);
+            echo '<div class="card">
+                        <div class="card-body">
+                               <div class="alert alert-success">
+                                    <a href="#" class="close p-1" data-dismiss="alert" aria-label="close">&times;</a>
+                                  Your activation link is send successfully, Kindly check mail inbox.
+                               <button class="btn btn-success"><a href="/public/login" style="color: white;">Click here to Login !</a></button>
+                             </div></div>';
+        }
     }
 }

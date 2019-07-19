@@ -1,36 +1,22 @@
-@extends('base_layouts.app1')
+@extends('base_layouts.app2')
 <!--main content-->
-@section('NavSide')
+@section('content')
     <div class="row">
-        <div class="container" id="IdMyResults"></div>
         <div class="col-md-4 col-lg-4 col-sm-10 col-10 mx-auto login-div" style="margin-top: 40px;">
-            @if(session('err_msg'))
-            <div class="alert alert-danger">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-               {{session('err_msg')}}
-            </div>
-            @endif
-            <div class="card shadow" style="border-radius: 10px;">
-                <div class="card-body">
-                    <form role="form" method="POST" action="/public/register/otp">
+            <div class="container" id="IdMyResults"></div>
+            <div class="card shadow" id="IdAddCardBody" style="border-radius: 10px;">
+                <div id="IdSelectBody" class="card-body">
+                    <div class="card-header">
+                        Choose activation method !
+                    </div>
+                    <br/>
                         <div class="form-group">
-                            <label for="u_name" class="control-label pull-left" style="padding-right: 25px;">Enter OTP to activate using mobile number :</label>
-                            <input  type="text" class="form-control" name="otp" required autofocus >
+                            <button id="IdPublicChooseBtnSms" class="btn btn-primary shadow"> Activate using mobile OTP </button>
                         </div>
-                        <div class="form-group">
-
-                            <div class="float-left">
-                                <button type="submit"  class="btn btn-primary" style="display: inline;">Submit</button>
-                                <a class="btn btn-link" href="#" id="IdPublicResendSms" style="font-size: 13px;display: inline;">
-                                   Resend OTP
-                                </a>|
-                                <a class="btn btn-link" href="#" id="IdPublicResendEmail" style="font-size: 13px;display: inline;">
-                                   Resend Email activation link
-                                </a>
-                                <br/>
-                            </div>
-                        </div><br/>
-                    </form>
+                    <div class="form-group">
+                        <button id="IdPublicChooseBtnEmail" class="btn btn-warning shadow pr-4"> Activate using Email  Link </button>
+                    </div>
+                        <br/>
                 </div>
             </div>
         </div>
@@ -40,50 +26,66 @@
 @section('page_scripts')
     <script>
         $(function (e) {
-            function commonajax(urls,el,hider){
-                $.ajax({
-                    url: urls,
-                    type: 'POST',
-                    data:new FormData(el),
-                    contentType:false,
-                    processData:false,
-                    success:function(result)
-                    {
-                        $('#'+hider).remove();
-                        $('#IdMyResults').html(result);
-                    },
-                    error: function(result){
-                        var errors = result.responseJSON;
-                        var errorsHtml = '';
-                        $.each(errors.errors, function( key, value ) {
-                            errorsHtml += '<li>'+value[0]+'</li> ';
-                        });
-                        $('#IdCreateErrors').html('<div class="alert alert-danger alert-dismissible"> ' +
-                            '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> ' +
-                            '<ul> ' +errorsHtml +
-                            '</ul> </div> ');
-                        // Render the errors with js ...
-                    }
-                });//ajax
-            }
+            let smsbody=' <div id="IdOtpBody" class="card-body">\n' +
+                '<form role="form" method="POST" action="/public/register/otp" autocomplete="off">\n' +
+                '<div class="form-group">\n' +
+                '                            <label for="u_name" class="control-label pull-left" style="padding-right: 25px;">Enter OTP to activate :</label>\n' +
+                '                            <input  type="text" class="form-control" name="otp" id="IdPublicOtp" required autofocus >\n' +
+                '                            <input  type="hidden" class="form-control" name="_token" id="IdPublicToken" required autofocus >\n' +
+                '                        </div>\n' +
+                '                        <div class="form-group">\n' +
+                '\n' +
+                '                            <div class="float-left">\n' +
+                '                                <button type="submit"  class="btn btn-primary" id="IdOtpSubmit" style="display: inline;">Submit</button>\n' +
+                '                                <a class="btn btn-link" href="#" id="IdPublicResendSms" style="font-size: 13px;display: inline;">\n' +
+                '                                   Resend OTP \n' +
+                '                                </a>\n' +
+                '                                <br/>\n' +
+                '                            </div>\n' +
+                '                        </div><br/>\n' +
+                '                    </form>\n' +
+                '                </div>';
 
-            $('#IdPublicResend').on('click',function (e) {
+
+             //sms choose btn
+            $('#IdPublicChooseBtnSms').click(function (e) {
                 e.preventDefault();
-                $('#IdPublicRegisterSubmit').addClass('disabled');
+                $('#IdPublicChooseBtnSms').addClass('disabled');
                 $.ajax({
-                    url: '/public/resend/sms',
+                    url: '/public/register/otp/resend',
                     type: 'POST',
-                    data: new FormData(this),
-                    contentType: false,
-                    processData: false,
+                    data: {_token:'{{csrf_token()}}'},
+                    beforeSend: function(){
+                        $("#IdLoading").modal('show');
+                    },
                     success: function (result) {
-                        $('#' + hider).remove();
+                        $('#IdSelectBody').remove();
                         $('#IdMyResults').html(result);
+                        $('#IdAddCardBody').html(smsbody);
+                        $('#IdPublicToken').val('{{csrf_token()}}');
+                        $("#IdLoading").modal('hide');
                     }
                 });
+            });
 
+            //email choose btn
+            $('#IdPublicChooseBtnEmail').click(function (e) {
+                e.preventDefault();
+                $('#IdPublicChooseBtnEmail').addClass('disabled');
+                $.ajax({
+                    url: '/public/register/mail/resend',
+                    type: 'POST',
+                    data: {_token:'{{csrf_token()}}'},
+                    beforeSend: function(){
+                        $("#IdLoading").modal('show');
+                    },
+                    success: function (result) {
+                        $('#IdAddCardBody').remove();
+                        $('#IdMyResults').html(result);
+                        $("#IdLoading").modal('hide');
+                    }
                 });
-
+            });
         });
     </script>
 @endsection
