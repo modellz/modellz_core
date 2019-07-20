@@ -22,6 +22,11 @@ Route::group(['middleware' => ['public_pullback']],function () {
 //logged persons
 Route::group(['middleware' => ['public_check','revalidate']],function () {
     Route::get('/public', 'public_users\IndexController@dashboard')->name('Public_Dashboard');
-    Route::get('/public/home', 'public_users\IndexController@dashboard')->name('Public_Dashboard');
+    //Route::get('/public/sfa/movies', 'public_users\IndexController@dashboard')->name('SFA_Movies');
+    //pagination
+    Route::get( '/public/search','public_users\IndexController@dashboard')->name('SFA_Movies');
+    Route::get( '/public/sfa/movies/{id}','public_users\IndexController@rateMovie')->name('SFA_Rate_Movie');
+
+
 });
 

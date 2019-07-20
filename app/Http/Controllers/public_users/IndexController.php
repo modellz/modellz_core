@@ -6,6 +6,7 @@ use App\Mail\PublicMailVerification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\public_users;
+use App\blogs;
 use Illuminate\Support\Facades\Mail;
 use Ixudra\Curl\Facades\Curl;
 use Illuminate\Support\Str;
@@ -23,9 +24,30 @@ class IndexController extends Controller
     }
 
     //new public user registration
-    public function dashboard(){
-        $times=array(1,2,3,4,5,6,7,8);
-        return view('public_voting.dashboard')->with('times',$times);
+    public function dashboard(Request $request){
+        session()->forget('success_results');
+        if (isset($request->search)){
+            $movies=blogs::where('Film_name', 'like', '%' . $request->search . '%')
+                ->orWhere('Director_name', 'like', '%' . $request->search . '%')
+                ->paginate(8);
+            $movies->appends(['search' => $request->search]);
+            if(count($movies)>0){
+                session()->flash('success_results','Search results for: '.$request->search);
+            }
+            else{
+                session()->flash('no_results','No results found for: '.$request->search);
+            }
+        }
+        else{
+            $movies=blogs::paginate(8);
+        }
+        return view('public_voting.dashboard')->with('movies',$movies);
+    }
+
+    //single movie
+    public function rateMovie($id){
+        $movie=blogs::find($id);
+        return view('public_voting.rate_movie')->with('movie',$movie);
     }
 
     //logout control
@@ -36,7 +58,6 @@ class IndexController extends Controller
 
     //login post controller
     public function logme(Request $request){
-
         try{
             $checks=public_users::where('email',$request->u_name)->orWhere('phone',$request->u_name)->get();
             foreach ($checks as $check){
