@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Mailer</title>
+    <title>Modellz Public Activation</title>
 
 </head>
 
@@ -15,7 +15,7 @@
     <div style="color:#444444; margin-top:2%;">Please click below link for your account activation or copy the below link and paste in  browser</div><br />
     <div style="padding:20px 0px 20px 0px;">
         <button type="button" style="background-color:#EC027B;padding: 20px; border:0px; border-radius:5px; margin-left:auto;margin-right:auto;display:block; font-size:18px;">
-            <a href="{{ 'http://192.168.1.9/public/register/api/'.$name.'/'.$token}}" >Activate Me</a>
+            <a href="{{ 'http://192.168.1.9/public/register/api/'.$name.'/'.$token}}"  style="color: white;">Activate Me</a>
         </button>
     </div><br />
     <div style="color:#EC027B;">Link : <a href="{{ 'http://192.168.1.9/public/register/api/'.$name.'/'.$token }}">{{'http://192.168.1.9/public/register/api/'.$name.'/'.$token}}</a></div><br />

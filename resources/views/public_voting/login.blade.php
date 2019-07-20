@@ -1,8 +1,8 @@
 @extends('base_layouts.app2')
 <!--main content-->
 @section('content')
-    <div class="row" style="width: 100%;">
-        <div class="col-md-3 col-lg-3 col-sm-10 col-10 mx-auto login-div" style="margin-top: 40px;">
+    <div class="row" style="min-height: 90vh;">
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 mx-auto" style="padding-top: 40px;">
             <h3 class="pl-2"> Sign in !</h3>
             <div class="card shadow" style="border-radius: 10px;">
                 <div class="card-body">

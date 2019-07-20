@@ -24,7 +24,7 @@ class IndexController extends Controller
 
     //new public user registration
     public function dashboard(){
-        $times=array(1,2,3,4,5,6,7,8,9,10,11,12);
+        $times=array(1,2,3,4,5,6,7,8);
         return view('public_voting.dashboard')->with('times',$times);
     }
 

@@ -1,10 +1,10 @@
 @extends('base_layouts.app2')
 <!--main content-->
 @section('content')
-    <div class="row">
+    <div class="row" style="min-height: 90vh;">
         <div class="container" id="IdMyResults"></div>
         <div id="IdCreateErrors"></div>
-        <div id="IdRegisterBlock" class="col-md-4 col-lg-4 col-sm-10 col-10 mx-auto login-div" style="margin-top: 40px;">
+        <div id="IdRegisterBlock" class="col-md-4 col-lg-4 col-sm-12 col-12 mx-auto" >
             <h3 class="pl-2">New user Registration !</h3>
             <div class="card shadow" style="border-radius: 10px;">
                 <div class="card-body">
@@ -41,7 +41,6 @@
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 @endsection

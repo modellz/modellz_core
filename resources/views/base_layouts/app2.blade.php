@@ -19,10 +19,10 @@
             <!-- Toggler/collapsibe Button -->
         </nav>
     </div>
-    <div class="container-fluid mx-4" style="margin-top: 50px;">
+    <div class="container-fluid" style="margin-top: 25px;">
     @yield('content')
     </div>
-<footer class="footer bg-dark fixed-bottom shadow-lg p-2">
+<footer class="footer bg-dark shadow-lg p-2" style="bottom: 0;">
     <div class="container">
         <span class="text-muted"> © 2019 -<a href="http://www.modellz.com">Modellz</a> All Rights Reserved</span>
     </div>
