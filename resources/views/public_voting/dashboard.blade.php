@@ -26,17 +26,22 @@
     <div class="row">
             @foreach($movies as $movie)
                 <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-2 mb-sm-2 mb-md-2 mb-lg-2">
-                    <div class="card shadow p-2">
-                        <img src="https://img.youtube.com/vi/6LD30ChPsSs/hqdefault.jpg" class="rounded-circle mx-auto p-2" width="30%">
-                        <div>
+                    <div class="shadow rounded">
+                        <a href="/public/sfa/movies/{{$movie->id}}">
+                        <div class="container">
+                            <img src="https://img.youtube.com/vi/7TavVZMewpY/hqdefault.jpg" class="img-fluid w-100" >
+                        </div>
+                        <div class="p-2">
                             <i class="fa fa-video-camera" aria-hidden="true"> :</i>
-                            <strong>{{$movie->Film_name}}</strong><hr>
-                            Director: {{$movie->Director_name}}<hr>
-                            Duration: {{$movie->Film_Duration}}<hr>
+                            <strong>{{$movie->Film_name}}</strong>
+                            , Director: {{$movie->Director_name}}, Duration: {{$movie->Film_Duration}}
+                            <hr style="margin: 0em;">
                         </div>
+                        </a>
+                        <!-- btn
                         <div class="pb-2">
-                            <button class="btn btn-success float-right"><a href="/public/sfa/movies/{{$movie->id}}" style="color: white;">Click here to vote !</a></button>
-                        </div>
+                            <button class="btn btn-success float-right m-1"><a href="/public/sfa/movies/{{$movie->id}}" style="color: white;">Click here to vote !</a></button>
+                        </div>-->
                     </div>
                 </div>
             @endforeach
