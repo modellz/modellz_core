@@ -22,6 +22,11 @@ class IndexController extends Controller
     public function register(){
         return view('public_voting.register');
     }
+    //new public user registration
+    public function profile(){
+        $data=public_users::where(['email'=>session('public_email'),'phone'=>session('public_phone')])->first();
+        return view('public_voting.profile')->with('data',$data);
+    }
 
     //new public user registration
     public function dashboard(Request $request){

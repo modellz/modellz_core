@@ -17,7 +17,7 @@
         <span class="p-md-2 p-lg-2 mr-2 mr-sm-2 mr-lg-4 float-right">
           <!-- Notifications: style can be found in dropdown.less
          <a href="#"  class="px-3 px-lg-3 px-md-3"><i class="fa fa-bell fa-lg" aria-hidden="true"></i></a> -->
-         <a href="#"  class="px-3 px-lg-3 px-md-3" title="{{'Logged in as '.session('public_name')}}"><i class="fa fa-user-o fa-lg" aria-hidden="true"></i><strong> {{' '.session('public_name')}}</strong></a>
+         <a href="/public/profile"  class="px-3 px-lg-3 px-md-3" title="{{'Logged in as '.session('public_name')}}"><i class="fa fa-user-o fa-lg" aria-hidden="true"></i><strong> {{' '.session('public_name')}}</strong></a>
           <a href="/public/logout"  class="px-3 " title="Log out" ><i class="fa fa-power-off fa-lg" aria-hidden="true"></i></a>
          </span>
             @endif

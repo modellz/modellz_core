@@ -5,7 +5,6 @@
     @include('base_includes.sidebar')
 @endsection
 @section('content')
-
     <div class="row">
         <div class="container bg-white shadow rounded p-2">
             <div class="d-flex justify-content-center">
