@@ -15,7 +15,7 @@
 <!--base container-->
     <div class="container-fluid">
         <nav  class="navbar navbar-expand-lg navbar-expand-md navbar-light fixed-top bg-white p-0 shadow">
-            <strong   class="ml-2 mx-auto" id="IdNumOfRows" style="font-size:20px;color: #e83a93;">Welcome to <img src="{{asset('storage/logo.png')}}" width="150px"></strong>
+            <strong   class="ml-2 mx-auto" id="IdNumOfRows" style="font-size:20px;color: #e83a93;">Welcome to <a href="/public"><img src="{{asset('storage/logo.png')}}" width="150px"></a></strong>
             <!-- Toggler/collapsibe Button -->
         </nav>
     </div>
