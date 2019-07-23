@@ -3,10 +3,11 @@
 @section('content')
     <div class="row" style="min-height: 90vh;">
         <div class="container" id="IdMyResults"></div>
-        <div id="IdCreateErrors"></div>
+
         <div id="IdRegisterBlock" class="col-md-4 col-lg-4 col-sm-12 col-12 mx-auto" >
             <h3 class="pl-2">New user Registration !</h3>
             <div class="card shadow" style="border-radius: 10px;">
+                <div id="IdCreateErrors"></div>
                 <div class="card-body">
                     <form role="form" id="IdPublicRegisterForm" method="POST" action="/public/register" autocomplete="off">
                         {{ csrf_field() }}
@@ -63,9 +64,11 @@
                         $('#'+hider).remove();
                         $('#IdMyResults').html(result);
                         $("#IdLoading").modal('hide');
+                        $('#IdPublicRegisterSubmit').removeClass('disabled');
 
                     },
                     error: function(result){
+                        $('#IdPublicRegisterSubmit').removeClass('disabled');
                         var errors = result.responseJSON;
                         var errorsHtml = '';
                         $.each(errors.errors, function( key, value ) {

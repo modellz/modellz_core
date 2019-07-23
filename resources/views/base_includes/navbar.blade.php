@@ -1,4 +1,4 @@
-<nav  class="navbar navbar-expand-lg navbar-expand-md navbar-light fixed-top bg-white p-0 shadow">
+<nav  class="navbar navbar-expand-lg navbar-expand-md navbar-light fixed-top bg-white p-0 shadow" style="z-index: 99999;">
     <a   href="javascript:void(0)" id="IdTrigSide" class="px-3" onclick="openNav()"><i class="fa fa-cogs fa-lg"></i></a>
     <strong   class="ml-2" id="IdNumOfRows" style="font-size:16px;color: dodgerblue;"><img src="{{asset('storage/logo.png')}}" width="80px" alt="Modellz">
         @if(session('public_name'))

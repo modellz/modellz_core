@@ -28,6 +28,10 @@ Route::group(['middleware' => ['public_check','revalidate']],function () {
     Route::get( '/public/search','public_users\IndexController@dashboard')->name('SFA_Movies');
     Route::get( '/public/sfa/movies/{id}','public_users\IndexController@rateMovie')->name('SFA_Rate_Movie');
 
-
+});
+//logged persons
+Route::group(['middleware' => ['public_admin','revalidate']],function () {
+    Route::get('/public/admin', 'public_users\IndexController@dashboard')->name('SFA_Awards');
+    Route::get('/public/sfa/', 'public_users\IndexController@profile')->name('Publi_');
 });
 
