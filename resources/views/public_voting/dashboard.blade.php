@@ -13,13 +13,14 @@
       <div class="alert alert-danger col-7 mx-auto">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
           {{session('no_results')}}
-          <button class="btn btn-primary"><a href="/public" style="color: white;">Go Back</a></button>
+          <button class="btn btn-primary"><a href="/public" style="color: white;"> Go Back !</a></button>
       </div>
   @endif
   @if(session('success_results'))
       <div class="alert alert-success col-7 mx-auto">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          {{session('success_results')}}
+          {{session('success_results').' '}}
+          <button class="btn btn-primary"><a href="/public" style="color: white;"> Go Back !</a></button>
       </div>
   @endif
     <div class="row">
