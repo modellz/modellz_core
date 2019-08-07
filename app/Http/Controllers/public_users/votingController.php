@@ -17,19 +17,23 @@ class votingController extends Controller
         if($check){
             $data=votes::find($check->id);
             $data->updated_at=now();
+            $status='Successfully modified';
         }
         else{
             $data=new votes();
+            $status='Successfully voted';
         }
         $data->p_id=$publicid->id;
         $data->b_id=$request->b_id;
         $data->category=$request->category;
+        $data->votes=$request->votes;
         try{
             $data->save();
-            echo 'Success!';
+            echo '<br/><div class="alert alert-success alert-dismissible"> 
+                         <strong>'.$status.' '.$request->votes.' points for '.$request->category.' Category</strong></div>';
         }
-        catch (\Exception $exception){
-            echo 'Something went wrong';
+        catch (\Exception $e){
+            echo 'Something went wrong '.$e;
         }
 
             }

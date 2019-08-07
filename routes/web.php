@@ -27,7 +27,7 @@ Route::group(['middleware' => ['public_check','revalidate']],function () {
     //pagination
     Route::get( '/public/search','public_users\IndexController@dashboard')->name('SFA_Movies');
     Route::get( '/public/sfa/movies/{id}','public_users\IndexController@rateMovie')->name('SFA_Rate_Movie');
-    Route::post('/public/vote', 'public_users\votinngController@store')->name('public.vote.store');
+    Route::post('/public/vote', 'public_users\votingController@store')->name('public.vote.store');
 });
 //logged persons
 Route::group(['middleware' => ['public_admin','revalidate']],function () {

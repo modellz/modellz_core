@@ -1,4 +1,4 @@
-<div id="IdLoading" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+<div id="IdLoading" class="modal fade mx-auto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" style="top:20%;">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">

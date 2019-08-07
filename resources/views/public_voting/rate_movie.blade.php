@@ -126,18 +126,38 @@
                  alert('Kindly select any category');
              }
              else {
-                 $('#IdSelectedCategory').html('<br/><div class="alert alert-success alert-dismissible"> ' +
-                     '<strong>'+ category+' : '+rating+'</strong>--<button type="submit" id="IdRatingSubmit" class="btn btn-primary"> Submit</button></div>');
-             }
+                 let csrf=$('#IdCsfrFetch').attr('content');
+                 $.ajax({
+                     url:'{{route('public.vote.store')}}',
+                     type:'POST',
+                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                     data:{category:category,votes:rating,b_id:'{{$movie->id}}'},
+                     beforeSend: function(){
+                         $("#IdLoading").modal('show');
+                     },
+                     success:function (result) {
+                         $("#IdLoading").modal('hide');
+                         $('#IdSelectedCategory').html(result);
+                     },
+                     error: function(result){
+                         var errors = result.responseJSON['message'];
+                         $("#IdLoading").modal('hide');
+                         $('#IdSelectedCategory').html('<div class="alert alert-danger alert-dismissible"> ' +
+                             '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> ' +
+                             '<ul> ' +errors+
+                             '</ul> </div> '
+                         );
+                         // Render the errors with js ...
+                     }
+                 });
+               }//else end
          });
-
          $(document).on('click','#IdRatingSubmit',function (e) {
             e.preventDefault();
              let category=$('#IdCategory :selected').val();
              let rating=$("input[name='Radios']:checked").val();
             alert('Rated Successfully !'+category+' - '+rating)
          });
-
      });
     </script>
 @endsection
