@@ -10,7 +10,13 @@
             <div class="row">
                 <div class="col-11 col-sm-11 col-md-8 col-lg-8">
                     <iframe class="video-card" title="YouTube video player" allowfullscreen="allowfullscreen" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" src="https://www.youtube.com/embed/{{$movie->Film_Url}}">
-                    </iframe>
+                    </iframe><br>
+                    <div class="mx-auto">
+                        @if($movie->id>1)
+                            <a href="http://modellz.test/public/sfa/movies/{{$movie->id-1}}" ><button class="btn btn-success">< Previous</button></a>
+                        @endif
+                        <a href="http://modellz.test/public/sfa/movies/{{$movie->id+1}}"><button class="btn btn-success">Next ></button></a>
+                    </div>
                 </div>
                 <div class="col-11 col-sm-11 col-md-5 col-lg-4 float-left">
                     <form method="POST" autocomplete="off">
@@ -68,8 +74,6 @@
                     <td>Film duration</td>
                     <td>: {{$movie->Film_Duration}}</td>
                 </tr>
-
-
             </table>
         </div>
     </div>
@@ -115,7 +119,7 @@
               '                                      5\n' +
               '                                  </label>\n' +
               '                              </div>');
-          $('#IdSelectedCategory').html('<br/><div class="alert alert-success alert-dismissible"> ' +
+          $('#IdSelectedCategory').html('<br/><div class="alert alert-warning alert-dismissible"> ' +
               '<strong>'+ category+'</strong></div>');
       });
          $(document).on('change','.form-check-input',function (e) {
@@ -132,16 +136,13 @@
                      type:'POST',
                      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                      data:{category:category,votes:rating,b_id:'{{$movie->id}}'},
-                     beforeSend: function(){
-                         $("#IdLoading").modal('show');
-                     },
                      success:function (result) {
                          $("#IdLoading").modal('hide');
                          $('#IdSelectedCategory').html(result);
                      },
                      error: function(result){
-                         var errors = result.responseJSON['message'];
                          $("#IdLoading").modal('hide');
+                         let errors = result.responseJSON['message'];
                          $('#IdSelectedCategory').html('<div class="alert alert-danger alert-dismissible"> ' +
                              '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> ' +
                              '<ul> ' +errors+

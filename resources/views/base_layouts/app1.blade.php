@@ -24,7 +24,6 @@
     @include('base_includes.footer')
 </div>
 @include('base_includes.loading')
-
 <!--./base container-->
 <!--includes jquery, bootstrap, datatables...etc-->
 <script src="/js/app.js"></script>
