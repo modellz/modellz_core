@@ -9,6 +9,7 @@ Route::get('/public/logout', 'public_users\IndexController@logout')->name('Publi
 
 //Temp routes for voting
 Route::group(['middleware' => ['public_pullback']],function () {
+    Route::get('/', 'public_users\IndexController@login')->name('Public_Login');
     Route::get('/public/login', 'public_users\IndexController@login')->name('Public_Login');
     Route::get('/public/register', 'public_users\IndexController@register')->name('Public_Registration');
     Route::get('/public/verify', 'public_users\IndexController@verify')->name('Public_Verification');
@@ -23,15 +24,14 @@ Route::group(['middleware' => ['public_pullback']],function () {
 Route::group(['middleware' => ['public_check','revalidate']],function () {
     Route::get('/public', 'public_users\IndexController@dashboard')->name('Public_Dashboard');
     Route::get('/public/profile', 'public_users\IndexController@profile')->name('Public_Profile');
-    //Route::get('/public/sfa/movies', 'public_users\IndexController@dashboard')->name('SFA_Movies');
     //pagination
     Route::get( '/public/search','public_users\IndexController@dashboard')->name('SFA_Movies');
     Route::get( '/public/sfa/movies/{id}','public_users\IndexController@rateMovie')->name('SFA_Rate_Movie');
-
+    Route::post('/public/vote', 'public_users\votinngController@store')->name('public.vote.store');
 });
 //logged persons
 Route::group(['middleware' => ['public_admin','revalidate']],function () {
     Route::get('/public/admin', 'public_users\IndexController@dashboard')->name('SFA_Awards');
-    Route::get('/public/sfa/', 'public_users\IndexController@profile')->name('Publi_');
+    Route::get('/public/sfa/', 'public_users\IndexController@profile')->name('Public');
 });
 

@@ -19,15 +19,9 @@
                             <label><strong>SELECT A CATEGORY TO VOTE:</strong></label>
                             <select class="form-control select2 w-100" id="IdCategory" name="category" title="selecte a category to vote">
                                 <option value="">----select----</option>
-                                <option value="Best Actor">Best Actor</option>
-                                <option value="Best Actress">Best Actress</option>
-                                <option value="Best Supporting Actor">Best Supporting Actor</option>
-                                <option value="Best Supporting Actress">Best Supporting Actress</option>
-                                <option value="Best Comedian">Best Comedian</option>
-                                <option value="Best Villain">Best Villain</option>
-                                <option value="Best Music Director">Best Music Director</option>
-                                <option value="Best Lyricist">Best Lyricist</option>
-                                <option value="Best Costumer">Best Costumer</option>
+                                @foreach($categorys as $category)
+                                <option value="{{$category->award_name}}">{{$category->award_name}}</option>
+                                 @endforeach
                             </select>
                         </div>
                           <div class="form-check-inline d-flex justify-content-between mx-3" id="IdRating">

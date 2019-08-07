@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\public_users;
 use App\blogs;
+use App\award_category;
 use Illuminate\Support\Facades\Mail;
 use Ixudra\Curl\Facades\Curl;
 use Illuminate\Support\Str;
@@ -52,7 +53,8 @@ class IndexController extends Controller
     //single movie
     public function rateMovie($id){
         $movie=blogs::find($id);
-        return view('public_voting.rate_movie')->with('movie',$movie);
+        $categorys=award_category::all();
+        return view('public_voting.rate_movie')->with(['movie'=>$movie,'categorys'=>$categorys]);
     }
 
     //logout control
@@ -61,7 +63,7 @@ class IndexController extends Controller
         return redirect('/public/login');
     }
 
-    //login post controller
+    //login post controller=> Simple logme due to less time
     public function logme(Request $request){
         try{
             $checks=public_users::where('email',$request->u_name)->orWhere('phone',$request->u_name)->get();
