@@ -13,9 +13,9 @@
                     </iframe><br>
                     <div class="mx-auto">
                         @if($movie->id>1)
-                            <a href="http://modellz.test/public/sfa/movies/{{$movie->id-1}}" ><button class="btn btn-success">< Previous</button></a>
+                            <a href="/public/sfa/movies/{{$movie->id-1}}" ><button class="btn btn-success">< Previous</button></a>
                         @endif
-                        <a href="http://modellz.test/public/sfa/movies/{{$movie->id+1}}"><button class="btn btn-success">Next ></button></a>
+                        <a href="/public/sfa/movies/{{$movie->id+1}}"><button class="btn btn-success">Next ></button></a>
                     </div>
                 </div>
                 <div class="col-11 col-sm-11 col-md-5 col-lg-4 float-left">
