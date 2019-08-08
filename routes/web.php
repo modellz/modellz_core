@@ -31,7 +31,8 @@ Route::group(['middleware' => ['public_check','revalidate']],function () {
 });
 //logged persons
 Route::group(['middleware' => ['public_admin','revalidate']],function () {
-    Route::get('/public/admin', 'public_users\IndexController@dashboard')->name('SFA_Awards');
-    Route::get('/public/sfa/', 'public_users\IndexController@profile')->name('Public');
+    Route::get('/public/admin', 'public_users\adminController@dashboard')->name('SFA_ADMIN');
+    Route::get('/public/admin/category', 'public_users\adminController@category')->name('Award_category');
+    Route::post('/public/vote/results', 'public_users\adminController@datatable')->name('datatables.data');
 });
 

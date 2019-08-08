@@ -5,55 +5,52 @@
     @include('base_includes.sidebar')
 @endsection
 @section('content')
-
-  <!--pagination & search box-->
-  @include('public_voting.inc.movie_search')
-  <!--./pagination & search box-->
-  @if(session('no_results'))
-      <div class="alert alert-danger col-7 mx-auto">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          {{session('no_results')}}
-          <button class="btn btn-primary"><a href="/public" style="color: white;"> Go Back !</a></button>
-      </div>
-  @endif
-  @if(session('success_results'))
-      <div class="alert alert-success col-7 mx-auto">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          {{session('success_results').' '}}
-          <button class="btn btn-primary"><a href="/public" style="color: white;"> Go Back !</a></button>
-      </div>
-  @endif
-    <div class="row">
-            @foreach($movies as $movie)
-                <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-2 mb-sm-2 mb-md-2 mb-lg-2">
-                    <div class="shadow rounded">
-                        <a href="/public/sfa/movies/{{$movie->id}}">
-                        <div class="container">
-                            <img src="https://img.youtube.com/vi/{{$movie->Film_Url}}/hqdefault.jpg" class="rounded img-fluid w-100" >
-                        </div>
-                        <div class="p-2">
-                            <i class="fa fa-video-camera" aria-hidden="true"> :</i>
-                            <strong>{{$movie->Film_name}}</strong>
-                            , Director: {{$movie->Director_name}}, Duration: {{$movie->Film_Duration}}
-                            <hr style="margin: 0em;">
-                        </div>
-                        </a>
-                        <!-- btn
-                        <div class="pb-2">
-                            <button class="btn btn-success float-right m-1"><a href="/public/sfa/movies/{{$movie->id}}" style="color: white;">Click here to vote !</a></button>
-                        </div>-->
-                    </div>
-                </div>
-            @endforeach
+<div class="card m-2 shadow-lg">
+    <div class="card-body">
+            <select id="IdTableView" class="form-control col-md-2 mb-2" title="select category" style="font-weight: bold;">
+                @foreach($awards as $award)
+                <option value="{{$award->award_name}}" style="font-weight: bold;">{{$award->award_name}}</option>
+                    @endforeach
+            </select>
+        <table id="datax" class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Film_name</th>
+                <th>Director</th>
+                <th>Total_votes</th>
+            </tr>
+            </thead>
+        </table>
     </div>
-  <br/>
-  <!--pagination & search box-->
-  @include('public_voting.inc.movie_search')
-  <!--./pagination & search box-->
+</div>
 @endsection
 <!--./main content-->
-<script>
-
-</script>
 @section('page_scripts')
+    <script>
+        $(function () {
+            let table = $('#datax').DataTable({
+                processing:true,
+                serverSide: true,
+                ajax: {
+                    "url": "{!! route('datatables.data') !!}",
+                    "type": "POST",
+                    data: function ( d ) {
+                        d.viewvalue = document.getElementById("IdTableView").value ;
+                            d._token= document.getElementById("IdCsfrFetch").value;
+                    }
+                },
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'film', name: 'film' },
+                    { data: 'director', name: 'director' },
+                    { data: 'votes', name: 'votes' },
+                ],
+                stateSave: true,
+                "scrollX": true,
+                select: true
+            });
+
+        });
+    </script>
 @endsection

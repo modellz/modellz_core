@@ -13,11 +13,19 @@
                     <a href="/public/profile" class="nav-link" onclick="openNav()" style="font-size: 14px;">
                     <i class="fa  fa-user sideicon pr-2"></i>User Profile</a>
                 </li>
-                <li class="nav-item">
-                    <a href="/public/history" class="nav-link" onclick="openNav()" style="font-size: 14px;">
-                        <i class="fa  fa-history sideicon pr-2"></i>history of activity</a>
-                </li>
             @endif
+                @if(session('public_role')=='SUPER_ADMIN')
+                    <li class="nav-item">
+                        <a  href="/public/admin" class="nav-link" onclick="openNav()"  style="font-size: 14px;">
+                            <i class="fa fa-gear sideicon pr-2"></i>Admin dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/public/admin/category" class="nav-link" onclick="openNav()" style="font-size: 14px;">
+                            <i class="fa  fa-table sideicon pr-2"></i>Award category</a>
+                    </li>
+                @endif
+
         </ul>
     </div>
 </nav>

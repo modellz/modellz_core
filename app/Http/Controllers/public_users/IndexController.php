@@ -53,6 +53,10 @@ class IndexController extends Controller
     //single movie
     public function rateMovie($id){
         $movie=blogs::find($id);
+        if(!$movie){
+            $su=$id+1;
+            return redirect('/public/sfa/movies/'.$su);
+        }
         $categorys=award_category::all();
         return view('public_voting.rate_movie')->with(['movie'=>$movie,'categorys'=>$categorys]);
     }
@@ -71,6 +75,7 @@ class IndexController extends Controller
                 $name=$check->name;
                 $email=$check->email;
                 $phone=$check->phone;
+                $role=$check->role;
                 $status=$check->status;
             }//foreach end
             if(count($checks)>0){
@@ -78,6 +83,7 @@ class IndexController extends Controller
                     session()->put([
                         'public_name'=>$name,
                         'public_email'=>$email,
+                        'public_role'=>$role,
                         'public_phone'=>$phone,
                     ]);
                     session()->flash('success_msg','Successfully logged in as '.$check->name);

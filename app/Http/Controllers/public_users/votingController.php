@@ -35,6 +35,6 @@ class votingController extends Controller
         catch (\Exception $e){
             echo 'Something went wrong '.$e;
         }
+            }//store ends
 
-            }
 }

@@ -13,7 +13,8 @@
         "ixudra/curl": "^6.16",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "nwidart/laravel-modules": "^4.1"
+        "nwidart/laravel-modules": "^4.1",
+        "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

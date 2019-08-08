@@ -63,7 +63,7 @@ class Kernel extends HttpKernel
         'public_check' => \App\Http\Middleware\public_check::class,
         'public_pullback' => \App\Http\Middleware\public_pullback::class,
         'revalidate' => \App\Http\Middleware\revalidate::class,
-
+        'public_admin' => \App\Http\Middleware\public_admin::class,
     ];
 
     /**
