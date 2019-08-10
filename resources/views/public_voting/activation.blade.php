@@ -1,7 +1,7 @@
 @extends('base_layouts.app2')
 <!--main content-->
 @section('content')
-    <div class="row">
+    <div class="row" style="min-height: 90vh;">
         <div class="col-md-4 col-lg-4 col-sm-10 col-10 mx-auto login-div" style="margin-top: 40px;">
             <div class="container" id="IdMyResults"></div>
             <div class="card shadow" id="IdAddCardBody" style="border-radius: 10px;">

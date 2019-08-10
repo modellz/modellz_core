@@ -176,7 +176,7 @@ class IndexController extends Controller
             echo '<div class="col-md-5 col-lg-5 col-sm-10 col-10 mx-auto login-div" style="margin-top: 40px;">
            <div class="alert alert-danger">
              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          Something went wrong!.
+          Something went wrong!.'.$exception.'
             </div>';
         }
     }

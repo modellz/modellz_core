@@ -3,14 +3,12 @@
 @section('content')
     <div class="row" style="min-height: 90vh;">
         <div class="container" id="IdMyResults"></div>
-
         <div id="IdRegisterBlock" class="col-md-4 col-lg-4 col-sm-12 col-12 mx-auto" >
             <h3 class="pl-2">New user Registration !</h3>
             <div class="card shadow" style="border-radius: 10px;">
                 <div id="IdCreateErrors"></div>
                 <div class="card-body">
                     <form role="form" id="IdPublicRegisterForm" method="POST" action="/public/register" autocomplete="off">
-                        {{ csrf_field() }}
                         <div id="IdCreateErrors"></div>
                         <div id="IdMyResults"></div>
                         <div class="form-group">
@@ -53,6 +51,7 @@
                 $.ajax({
                     url: urls,
                     type: 'POST',
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     data:new FormData(el),
                     contentType:false,
                     processData:false,

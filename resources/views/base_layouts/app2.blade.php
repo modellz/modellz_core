@@ -13,16 +13,14 @@
 <body>
 @include('base_includes.loading')
 <!--base container-->
-    <div class="container-fluid">
-        <nav  class="navbar navbar-expand-lg navbar-expand-md navbar-light fixed-top bg-white p-0 shadow">
+        <nav  class="navbar navbar-light na bg-white p-0 shadow">
             <strong   class="ml-2 mx-auto" id="IdNumOfRows" style="font-size:20px;color: #e83a93;">Welcome to <a href="/public"><img src="{{asset('storage/logo.png')}}" width="150px"></a></strong>
             <!-- Toggler/collapsibe Button -->
         </nav>
-    </div>
-    <div class="container-fluid" style="margin-top: 25px;">
+    <div class="container-fluid" >
     @yield('content')
     </div>
-<footer class="footer bg-dark shadow-lg p-2" style="bottom: 0;">
+<footer class="footer bg-dark shadow-lg p-2" style="bottom: 0%;">
     <div class="container">
         <span class="text-muted"> © 2019 -<a href="http://www.modellz.com">Modellz</a> All Rights Reserved</span>
     </div>
