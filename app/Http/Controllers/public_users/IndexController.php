@@ -145,15 +145,15 @@ class IndexController extends Controller
         $smsContent = "Hi $request->u_name,Use this code to activate your account.$rand";
 
         try{
-            $data->num_of_sends=2;
+            $data->num_of_sends=1;
             $data->save();
-            $this->SendActiveMail($data);
+            //$this->SendActiveMail($data);
             $this->SendActiveSms($data,$smsContent);
             //session()->flash('success_msg','Successfully Registered !');
             echo '<div class="col-md-5 col-lg-5 col-sm-10 col-10 mx-auto login-div" style="margin-top: 40px;">
            <div class="alert alert-success">
              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          Congratulations! your account is registered, you will shortly receive an email to activate your account.
+          Congratulations! your account is registered, you will shortly receive an OTP to activate your account.
             </div>
             <div class="card shadow" style="border-radius: 10px;">
                 <div class="card-body">
@@ -176,7 +176,7 @@ class IndexController extends Controller
             echo '<div class="col-md-5 col-lg-5 col-sm-10 col-10 mx-auto login-div" style="margin-top: 40px;">
            <div class="alert alert-danger">
              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          Something went wrong!.'.$exception.'
+          Something went wrong!
             </div>';
         }
     }

@@ -20,12 +20,10 @@
                                 {{session('success_msg')}}
                             </div>
                         @endif
-
                         <div class="form-group">
-                            <label for="u_name" class="control-label pull-left" style="padding-right: 25px;font-weight: bold;">Email / Phone:</label>
-                            <input  type="text" class="form-control" name="u_name" title="" required autofocus >
+                            <label for="u_name" class="control-label pull-left" style="padding-right: 25px;font-weight: bold;">Mobile no:</label>
+                            <input  type="number" class="form-control" name="u_name" pattern="[6789][0-9]{9}" title="" required autofocus >
                         </div>
-
                         <div class="form-group">
                             <div class="float-left">
                                 <button type="submit"  class="btn btn-primary" style="display: inline;">Log in</button>

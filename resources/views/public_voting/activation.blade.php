@@ -13,9 +13,9 @@
                         <div class="form-group">
                             <button id="IdPublicChooseBtnSms" class="btn btn-primary shadow"> Activate using mobile OTP </button>
                         </div>
-                    <div class="form-group">
+                 <!--   <div class="form-group">
                         <button id="IdPublicChooseBtnEmail" class="btn btn-warning shadow pr-4"> Activate using Email  Link </button>
-                    </div>
+                    </div>-->
                         <br/>
                 </div>
             </div>
@@ -34,7 +34,6 @@
                 '                            <input  type="hidden" class="form-control" name="_token" id="IdPublicToken" required autofocus >\n' +
                 '                        </div>\n' +
                 '                        <div class="form-group">\n' +
-                '\n' +
                 '                            <div class="float-left">\n' +
                 '                                <button type="submit"  class="btn btn-primary" id="IdOtpSubmit" style="display: inline;">Submit</button>\n' +
                 '                                <a class="btn btn-link" href="#" id="IdPublicResendSms" style="font-size: 13px;display: inline;">\n' +
