@@ -166,8 +166,8 @@ class IndexController extends Controller
                         <div class="form-group">
                             <div class="float-left">
                                 <button type="submit" id="IdOtpSubmit" class="btn btn-primary" style="display: inline;">Submit</button>
-                                <a class="btn btn-link" href="#" id="IdPublicResend" style="font-size: 14px;display: inline;">
-                                    Resend OTP!
+                                <a href="#" class="btn btn-link" id="IdPublicResendSms" style="font-size: 14px;display: inline;">
+                                    Resend OTP !
                                 </a><br/>
                             </div>
                         </div><br/></form></div></div></div>';
@@ -242,8 +242,8 @@ class IndexController extends Controller
             $add->num_of_sends+=1;
             $add->save();
         }
-        Curl::to('http://bulksms.expressad.in/httpapi/httpapi')
-            ->withData( array( 'token' => '3dc6f581829d5b9a9df5ec4036db1bec', 'sender' => 'modelz','number'=>$data['phone'],'route'=>'2','type'=>1, 'sms'=> $smsContent ) )
+        Curl::to('http://bulksms.expressad.in/httpapi/otpapi')
+            ->withData( array( 'token' => '05958824f5d6439ee91a2db00fdd475b', 'number'=>$data['phone'], 'sms'=> $smsContent ) )
             ->post();
     }
 
@@ -260,6 +260,7 @@ class IndexController extends Controller
         $user = public_users::where('email', session('tmp_EM'))->orWhere('phone',session('tmp_EM'))->first();
         if($user->num_of_sends>6){
             session()->flash('err_msg','You have reached notification limit, Kindly contact Modellz for further details');
+            echo '<div class="alert alert-danger col-6 mx-auto">You have reached notification limit, Kindly contact Modellz for further details</div>';
             echo '<script>
                   window.location.href = "/public/login";
                   </script>';

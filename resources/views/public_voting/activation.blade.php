@@ -31,7 +31,7 @@
                 '<div class="form-group">\n' +
                 '                            <label for="u_name" class="control-label pull-left" style="padding-right: 25px;">Enter OTP to activate :</label>\n' +
                 '                            <input  type="text" class="form-control" name="otp" id="IdPublicOtp" required autofocus >\n' +
-                '                            <input  type="hidden" class="form-control" name="_token" id="IdPublicToken" required autofocus >\n' +
+                '                            <input  type="hidden" class="form-control" name="_token" id="IdPublicToken"  value="">\n' +
                 '                        </div>\n' +
                 '                        <div class="form-group">\n' +
                 '                            <div class="float-left">\n' +
@@ -47,6 +47,24 @@
 
 
              //sms choose btn
+            $(document).on('click','#IdPublicResendSms',function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/public/register/otp/resend',
+                    type: 'POST',
+                    data: {_token:'{{csrf_token()}}'},
+                    beforeSend: function(){
+                        $("#IdLoading").modal('show');
+                    },
+                    success: function (result) {
+                        $('#IdMyResults').html('<div class="alert alert-success m-2 p-3">Resend Done !</div>'+result);
+                        $('#IdPublicToken').val('{{csrf_token()}}');
+                        $("#IdLoading").modal('hide');
+                    }
+                });
+            });
+
+            //sms choose btn
             $('#IdPublicChooseBtnSms').click(function (e) {
                 e.preventDefault();
                 $('#IdPublicChooseBtnSms').addClass('disabled');
