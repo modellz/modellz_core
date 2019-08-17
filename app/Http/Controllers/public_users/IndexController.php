@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\public_users;
 
+use App\add_links;
 use App\Mail\PublicMailVerification;
+use function Complex\add;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\public_users;
@@ -53,12 +55,28 @@ class IndexController extends Controller
     //single movie
     public function rateMovie($id){
         $movie=blogs::find($id);
+        $adds=add_links::all();
         if(!$movie){
             $su=$id+1;
             return redirect('/public/sfa/movies/'.$su);
         }
         $categorys=award_category::all();
-        return view('public_voting.rate_movie')->with(['movie'=>$movie,'categorys'=>$categorys]);
+        $add_id=0;
+        if(!session('add_id')){
+            session()->put('add_id',1);
+            $add_id=session('add_id');
+        }
+        elseif (session('add_id')>=count($adds)){
+            session()->put('add_id',1);
+            $add_id=session('add_id');
+        }
+        else{
+            $add_id=session('add_id');
+            $add_id+=1;
+            session()->put('add_id',$add_id);
+        }
+        $myadd=add_links::find($add_id);
+        return view('public_voting.rate_movie')->with(['movie'=>$movie,'categorys'=>$categorys,'myadd'=>$myadd]);
     }
 
     //logout control
@@ -98,7 +116,7 @@ class IndexController extends Controller
                 }
             }
             else{
-                session()->flash('err_msg','Invalid email or phone');
+                session()->flash('err_msg','Invalid phone number');
                 return redirect('/public/login');
             }
         }

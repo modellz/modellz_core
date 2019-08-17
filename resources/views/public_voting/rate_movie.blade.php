@@ -9,14 +9,15 @@
         <div class="container bg-white shadow rounded p-2">
             <div class="row">
                 <div class="col-11 col-sm-11 col-md-8 col-lg-8">
-                    <iframe class="video-card" title="YouTube video player" allowfullscreen="allowfullscreen" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" src="https://www.youtube.com/embed/{{$movie->Film_Url}}">
-                    </iframe><br>
-                    <div id="player"></div>
+                    <div id="IdIframe">
+                    </div>
+                    <div class="video-card" id="player"></div>
                     <div class="mx-auto">
                         @if($movie->id>1)
                             <a href="/public/sfa/movies/{{$movie->id-1}}" ><button class="btn btn-success">< Previous</button></a>
                         @endif
-                        <a href="/public/sfa/movies/{{$movie->id+1}}"><button class="btn btn-success">Next ></button></a>
+                            <a href="/public"><button class="btn btn-success"><i class="fa fa-home"></i> Home</button></a>
+                            <a href="/public/sfa/movies/{{$movie->id+1}}"><button class="btn btn-success">Next ></button></a>
                     </div>
                 </div>
                 <div class="col-11 col-sm-11 col-md-5 col-lg-4 float-left">
@@ -85,7 +86,6 @@
     <script>
         // 2. This code loads the IFrame Player API code asynchronously.
         var tag = document.createElement('script');
-
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -95,9 +95,7 @@
         var player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
-                height: '390',
-                width: '640',
-                videoId: 'M7lc1UVf-VE',
+                videoId: '{{$myadd->youtube_id}}',
                 events: {
                     'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange
@@ -115,9 +113,12 @@
         //    the player should play for six seconds and then stop.
         var done = false;
         function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.PLAYING && !done) {
-                setTimeout(stopVideo, 6000);
-                done = true;
+            if(event.data === 0) {
+                $('#player').remove();
+                $('#IdIframe').html('<iframe class="video-card" title="YouTube video player" allowfullscreen="allowfullscreen" ' +
+                    'allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"' +
+                    ' src="https://www.youtube.com/embed/{{$movie->Film_Url}}?autoplay=1">\n' +
+                    '</iframe>')
             }
         }
         function stopVideo() {
@@ -129,7 +130,7 @@
       $('.select2').select2({
           minimumResultsForSearch: -1
       });
-      $('#IdCategory').change(function (e) {
+         $('#IdCategory').change(function (e) {
           let category=$('#IdCategory :selected').val();
           e.preventDefault();
           $('#IdRating').html('  <div class="form-check" style="display: inline;">\n' +
