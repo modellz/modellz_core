@@ -30,7 +30,7 @@ class votingController extends Controller
         try{
             $data->save();
             echo '<br/><div class="alert alert-success alert-dismissible"> 
-                         <strong>'.$status.' '.$request->votes.' points for '.$request->category.' Category</strong></div>';
+                         <strong>'.$status.' '.$request->votes.' points for '.$request->category.' Category</strong><br>Click again to modify your votes !</div>';
         }
         catch (\Exception $e){
             echo 'Something went wrong '.$e;

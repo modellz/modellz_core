@@ -4,6 +4,7 @@ namespace App\Http\Controllers\public_users;
 
 use App\add_links;
 use App\Mail\PublicMailVerification;
+use App\votes;
 use function Complex\add;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -55,12 +56,17 @@ class IndexController extends Controller
     //single movie
     public function rateMovie($id){
         $movie=blogs::find($id);
-        $adds=add_links::all();
         if(!$movie){
             $su=$id+1;
             return redirect('/public/sfa/movies/'.$su);
         }
+        $adds=add_links::all();
         $categorys=award_category::all();
+        $points=0;
+        $votes=votes::where(['b_id'=>$id,'category'=>'Best Film'])->get();
+        foreach ($votes as $vote){
+            $points+=$vote->votes;
+        }
         $add_id=0;
         if(!session('add_id')){
             session()->put('add_id',1);
@@ -76,7 +82,7 @@ class IndexController extends Controller
             session()->put('add_id',$add_id);
         }
         $myadd=add_links::find($add_id);
-        return view('public_voting.rate_movie')->with(['movie'=>$movie,'categorys'=>$categorys,'myadd'=>$myadd]);
+        return view('public_voting.rate_movie')->with(['movie'=>$movie,'categorys'=>$categorys,'myadd'=>$myadd,'points'=>$points]);
     }
 
     //logout control
@@ -316,4 +322,5 @@ class IndexController extends Controller
                              </div></div>';
         }
     }
-}
+
+}//end of classs

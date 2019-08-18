@@ -39,6 +39,7 @@
 
                         </div>
                     </form>
+                    <div class="alert alert-primary alert-dismissible" id="IdTotalPoints" ><strong>Total votes for Best Film : {{$points}}</strong></div>
                 </div>
             </div>
             <br/>
@@ -127,9 +128,7 @@
     </script>
     <script>
      $(function (e) {
-      $('.select2').select2({
-          minimumResultsForSearch: -1
-      });
+      $('.select2').select2({minimumResultsForSearch: -1});
          $('#IdCategory').change(function (e) {
           let category=$('#IdCategory :selected').val();
           e.preventDefault();
@@ -174,11 +173,11 @@
                  alert('Kindly select any category');
              }
              else {
-                 let csrf=$('#IdCsfrFetch').attr('content');
+                 let csrf=$('meta[name="csrf-token"]').attr('content');
                  $.ajax({
                      url:'{{route('public.vote.store')}}',
                      type:'POST',
-                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                     headers: {'X-CSRF-TOKEN': csrf},
                      data:{category:category,votes:rating,b_id:'{{$movie->id}}'},
                      success:function (result) {
                          $("#IdLoading").modal('hide');
